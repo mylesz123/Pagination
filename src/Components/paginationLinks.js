@@ -14,8 +14,7 @@ export default function PaginationLinks({posts, postsPerPage, changePage}) {
                 {pageNumbers.map(index => {
                     return (
                         <li>
-                            {/* href="!#" */}
-                            <a onClick={() => changePage(index)}>{index}</a>
+                            <a href="!#" onClick={() => changePage(index)}>{index}</a>
                         </li>
                     )
                 })}
