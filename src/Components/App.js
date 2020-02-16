@@ -1,35 +1,42 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '../styles/App.css';
 import { girlNames } from '../data/girlNames';
 import { dudeNames } from '../data/dudeNames';
-import ListItem from './ListItem';
+import Posts from './Posts';
+import PaginationLinks from './PaginationLinks';
 
 export default function App() {
-  let listOfGirls = girlNames.map(g => {
-    return(
-      <ListItem />
-    )
-  });
+  let [posts, setPosts] = useState([]);
+  let [currentPage, setCurrentPage] = useState(1);
+  let [postsPerPage] = useState(10);
 
-  let listOfDudes = dudeNames.map(d => {
-    return (
-      <ListItem />
-    )
-  })
+  const getIndexOfLastPost = currentPage * postsPerPage;
+  const getIndexOfFirstPost = getIndexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(getIndexOfFirstPost, getIndexOfLastPost);
+
+  const changePage = pageNumber => setCurrentPage(pageNumber);
+
+  useEffect(() => {
+    setPosts(girlNames.concat(dudeNames))
+  }, []);
 
   return (
     <div className="page">
       <div className="page-header cf">
         <h2>Students</h2>
-        {/* dynamically insert search form here (optional) */}
+        {/* insert search form here */}
       </div>
       
-      <ul className="student-list">
-        {/* dynamically generate list of fake users with list item class (user) */}
-        {listOfGirls}
-        {listOfDudes}
-      </ul>
-      {/* dynamically add pagination links here */}
+      {/* generate list of fake users */}
+      <Posts posts={currentPosts}/>
+
+      {/* add pagination links here */}
+      <PaginationLinks 
+        posts={posts} 
+        postsPerPage={postsPerPage}
+        changePage={changePage}
+      />
+
     </div>
   );
 }
