@@ -32,7 +32,7 @@ export default function Posts({posts}) {
         <ul className="student-list">
             {/* dynamically generate list of fake users with list item class (user) */}
             {posts.map(post => (
-                <li className="student-item cf">
+                <li key={post} className="student-item cf">
                     <div className="student-details">
                         <img className="avatar" alt="user avatar" src={getUrl(getRandomNumber())} />
                         <h3>{post}</h3><span className="email">{getEmail(post)}</span>
